@@ -17,6 +17,27 @@
 #include <drv_types.h>
 #include <hal_data.h>
 
+/* Radiotap fields that rtw_monitor_xmit_entry() parses but older kernels
+ * do not define yet. */
+#if (LINUX_VERSION_CODE < KERNEL_VERSION(3, 8, 0))
+#define IEEE80211_RADIOTAP_VHT 21
+#define IEEE80211_RADIOTAP_VHT_KNOWN_STBC			0x0001
+#define IEEE80211_RADIOTAP_VHT_KNOWN_GI				0x0004
+#define IEEE80211_RADIOTAP_VHT_KNOWN_BANDWIDTH			0x0040
+#define IEEE80211_RADIOTAP_VHT_FLAG_STBC			0x01
+#define IEEE80211_RADIOTAP_VHT_FLAG_SGI				0x04
+#endif
+
+#if (LINUX_VERSION_CODE < KERNEL_VERSION(3, 11, 0))
+#define IEEE80211_RADIOTAP_MCS_HAVE_STBC	0x20
+#define IEEE80211_RADIOTAP_MCS_STBC_MASK	0x60
+#define IEEE80211_RADIOTAP_MCS_STBC_SHIFT	5
+#endif
+
+#if (LINUX_VERSION_CODE < KERNEL_VERSION(3, 15, 0))
+#define IEEE80211_RADIOTAP_CODING_LDPC_USER0			0x01
+#endif
+
 static u8 P802_1H_OUI[P80211_OUI_LEN] = { 0x00, 0x00, 0xf8 };
 static u8 RFC1042_OUI[P80211_OUI_LEN] = { 0x00, 0x00, 0x00 };
 
